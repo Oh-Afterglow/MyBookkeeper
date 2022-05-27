@@ -14,14 +14,13 @@
         android:layout_marginLeft="148dp"
         android:layout_marginEnd="148dp"
         android:layout_marginRight="148dp"
-        android:onClick="onClickOfAdd"
-        android:text="ADD BOOK!"
+        android:text="@string/add_book"
         app:layout_constraintBottom_toTopOf="@+id/button_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.953" />
+        app:layout_constraintVertical_bias="0.958" />
 
     <Button
         android:id="@+id/button_view"
@@ -31,11 +30,24 @@
         android:layout_marginLeft="125dp"
         android:layout_marginEnd="126dp"
         android:layout_marginRight="126dp"
-        android:layout_marginBottom="164dp"
-        android:onClick="onClickOfView"
-        android:text="VIEW MY BOOKS!"
+        android:layout_marginBottom="128dp"
+        android:text="@string/view_my_books"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="340dp"
+        android:contentDescription="archbtw"
+        app:layout_constraintBottom_toTopOf="@+id/button_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.83"
+        app:srcCompat="@drawable/_a4erwg7uyk61" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,24 @@
 <resources>
     <string name="app_name">MyBookkeeper</string>
     <string name="title_activity_add_book">AddBookActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
     <string name="title_activity_book_list">BookListActivity</string>
+    <string name="search_for_your_favorite_book">Search for your favorite book!</string>
+    <string name="isbn">Enter ISBN</string>
+    <string name="title">Title</string>
+    <string name="author">Author</string>
+    <string name="publisher">Publisher</string>
+    <string name="year">Year</string>
+    <string name="add_book">ADD BOOK!</string>
+    <string name="view_my_books">VIEW MY BOOKS!</string>
+    <string name="search_result">- Search Result -</string>
+
+    <!--- Variable strings used for the add book activity -->
+    <string name="title_add"> </string>
+    <string name="author_add"> </string>
+    <string name="publisher_and_year_add"> </string>
+
+    <string name="go">Go!!!</string>
+    <string name="book_cover">book cover</string>
 </resources>
