@@ -1,7 +1,6 @@
 package com.example.mybookkeeper
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +23,10 @@ class BookListViewModel(private val bookRepository: BookRepository): ViewModel()
         return bookRepository.addBook(book)
     }
 
+    fun deleteBook(book: Book) {
+        bookRepository.deleteBook(book)
+    }
+
     fun getBookByISBN(isbn: String): Book? {
         return bookRepository.getBookByISBN(isbn)
     }
@@ -32,10 +35,14 @@ class BookListViewModel(private val bookRepository: BookRepository): ViewModel()
         return bookRepository.getBooks()
     }
 
+    fun searchAuthor(author: String) {
+        bookRepository.searchAuthor(author)
+    }
 }
 
 class BookRepository {
     private val booksLiveData = MutableLiveData<List<Book>>()
+    private val backupBookList = mutableListOf<Book>()
 
 
     fun addBook(book: Book) : Boolean {
@@ -46,6 +53,7 @@ class BookRepository {
             }
         }
         currentBooks.add(book)
+        backupBookList.add(book)
         booksLiveData.postValue(currentBooks)
         return true
     }
@@ -53,6 +61,7 @@ class BookRepository {
     fun deleteBook(book: Book) {
         val currentBooks = (booksLiveData.value ?: emptyList()).toMutableList()
         currentBooks.remove(book)
+        backupBookList.remove(book)
         booksLiveData.postValue(currentBooks)
     }
 
@@ -64,14 +73,12 @@ class BookRepository {
         val file = File(context.filesDir, "books.json")
         if (file.exists()) {
             val json = file.readText()
-            Log.d("BookRepository", "loadBooksFromFile()")
-            Log.d("BookRepository", json)
             val books = Json.decodeFromString(ListSerializer(Book.serializer()), json)
             booksLiveData.postValue(books)
+            backupBookList.addAll(books)
         }
         else {
             // create a new file
-            Log.d("BookRepository", "loadBooksFromFile() - file does not exist")
             file.createNewFile()
             file.writeText("[]")
         }
@@ -85,6 +92,26 @@ class BookRepository {
 
     fun getBooks(): MutableLiveData<List<Book>> {
         return booksLiveData
+    }
+
+    fun searchAuthor(author: String) {
+        val currentBooks = (booksLiveData.value ?: emptyList()).toMutableList()
+        if (author.isNotEmpty()) {
+            val resultBooks = mutableListOf<Book>()
+            for (b in currentBooks) {
+                if (b.author.contains(author, true)) {
+                    resultBooks.add(b)
+                }
+            }
+            booksLiveData.postValue(resultBooks)
+        }
+        else {
+            if (currentBooks.count() != backupBookList.count()) {
+                currentBooks.clear()
+                currentBooks.addAll(backupBookList)
+                booksLiveData.postValue(currentBooks)
+            }
+        }
     }
 
     companion object {

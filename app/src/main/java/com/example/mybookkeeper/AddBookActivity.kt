@@ -67,6 +67,11 @@ class AddBookActivity : AppCompatActivity() {
         initSearchButton()
     }
 
+    override fun onStop() {
+        super.onStop()
+        bookListViewModel.saveBooks(this.applicationContext)
+    }
+
     private fun initAddBookButton() {
         addButton.isEnabled = false
         addButton.setOnClickListener {
@@ -100,7 +105,6 @@ class AddBookActivity : AppCompatActivity() {
                     // do nothing
                 }
                 alertDialog.show()
-                bookListViewModel.saveBooks(this.applicationContext)
             }
         }
     }

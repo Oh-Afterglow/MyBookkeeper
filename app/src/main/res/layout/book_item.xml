@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -7,39 +8,41 @@
     <TextView
         android:id="@+id/publisher_list"
         android:layout_width="270dp"
-        android:layout_height="27dp"
+        android:layout_height="25dp"
 
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/publisher_list"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toEndOf="@id/book_cover"
         app:layout_constraintTop_toBottomOf="@+id/author_list" />
 
     <TextView
         android:id="@+id/year_list"
         android:layout_width="270dp"
-        android:layout_height="27dp"
+        android:layout_height="20dp"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/year_list"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toEndOf="@id/book_cover"
         app:layout_constraintTop_toBottomOf="@+id/publisher_list" />
 
     <ImageView
         android:id="@+id/book_cover"
-        android:layout_width="99dp"
-        android:layout_height="122dp"
+        android:layout_width="101dp"
+        android:layout_height="139dp"
         android:layout_margin="8dp"
         android:contentDescription="@string/book_cover_content_description"
+        app:srcCompat="@drawable/download"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/title_list"
         app:layout_constraintHorizontal_bias="0.151"
@@ -49,7 +52,7 @@
     <TextView
         android:id="@+id/title_list"
         android:layout_width="270dp"
-        android:layout_height="29dp"
+        android:layout_height="54dp"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="8dp"
@@ -57,7 +60,7 @@
         android:layout_marginRight="8dp"
         android:text="@string/title_list"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/book_cover"
@@ -66,16 +69,17 @@
     <TextView
         android:id="@+id/author_list"
         android:layout_width="270dp"
-        android:layout_height="27dp"
+        android:layout_height="44dp"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/author_list"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toEndOf="@id/book_cover"
         app:layout_constraintTop_toBottomOf="@+id/title_list" />
 
