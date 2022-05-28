@@ -21,4 +21,10 @@
 
     <string name="go">Go!!!</string>
     <string name="book_cover">book cover</string>
+    <string name="book_cover_content_description">book cover</string>
+    <string name="title_list">Title</string>
+    <string name="author_list">author</string>
+    <string name="publisher_year_list">anything · anything</string>
+    <string name="publisher_list">anything</string>
+    <string name="year_list">anything</string>
 </resources>
