@@ -2,7 +2,6 @@ package com.example.mybookkeeper
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -17,14 +16,9 @@ import androidx.fragment.app.DialogFragment
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.serialization.Serializable
 import java.net.URL
 import java.util.concurrent.Executors
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.encodeToString
-import java.io.File
-import java.io.FileReader
 
 
 class AddBookActivity : AppCompatActivity() {
@@ -52,6 +46,10 @@ class AddBookActivity : AppCompatActivity() {
     private var authorIntro = ""
     private var description = ""
 
+    private val bookListViewModel: BookListViewModel by lazy {
+        BookListViewModelFactory().create(BookListViewModel::class.java)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +70,38 @@ class AddBookActivity : AppCompatActivity() {
     private fun initAddBookButton() {
         addButton.isEnabled = false
         addButton.setOnClickListener {
-            saveBook()
+            val book = Book(
+                isbn,
+                title,
+                subtitle,
+                author,
+                translator,
+                publisher,
+                year,
+                pages,
+                coverURl,
+                price,
+                authorIntro,
+                description
+            )
+            if(!bookListViewModel.addBook(book)) {
+                val alertDialog = AlertDialog.Builder(this)
+                alertDialog.setTitle("Book already exists")
+                alertDialog.setMessage("This book already exists in your book list")
+                alertDialog.setPositiveButton("OK") { _, _ ->
+                    // do nothing
+                }
+                alertDialog.show()
+            } else {
+                val alertDialog = AlertDialog.Builder(this)
+                alertDialog.setTitle("Book added")
+                alertDialog.setMessage("This book has been added to your book list")
+                alertDialog.setPositiveButton("OK") { _, _ ->
+                    // do nothing
+                }
+                alertDialog.show()
+                bookListViewModel.saveBooks(this.applicationContext)
+            }
         }
     }
 
@@ -151,53 +180,6 @@ class AddBookActivity : AppCompatActivity() {
         searchBox.text.clear()
         imageView.setImageResource(R.drawable.download)
         addButton.isEnabled = false
-    }
-
-    private fun saveBook() {
-        val book = Book(
-            isbn,
-            title,
-            subtitle,
-            author,
-            translator,
-            publisher,
-            year,
-            pages,
-            coverURl,
-            price,
-            authorIntro,
-            description
-        )
-
-        val file = File(this.filesDir, "books.json")
-        if (!file.exists()) {
-            file.createNewFile()
-            this.openFileOutput("books.json", Context.MODE_PRIVATE).use {
-                it.write("[]".toByteArray())
-            }
-        }
-        val fileReader = FileReader(file)
-        val fileContent = fileReader.readText()
-        fileReader.close()
-        if (fileContent.isEmpty()) {
-            this.openFileOutput("books.json", Context.MODE_PRIVATE).use {
-                it.write(Json.encodeToString(listOf(book)).toByteArray())
-            }
-        } else {
-            val books = Json.decodeFromString(ListSerializer(Book.serializer()), fileContent)
-            for (b in books) {
-                if (b.isbn == isbn) {
-                    val errorString = "Book already exists."
-                    MsgDialogFragment(errorString).show(supportFragmentManager, "NoResultDialogFragment")
-                    return
-                }
-            }
-            val newBooks = books + book
-            this.openFileOutput("books.json", Context.MODE_PRIVATE).use {
-                it.write(Json.encodeToString(newBooks).toByteArray())
-            }
-            MsgDialogFragment("Book added.").show(supportFragmentManager, "NoResultDialogFragment")
-        }
     }
 
     class MsgDialogFragment(private val msg: String) : DialogFragment() {
