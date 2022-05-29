@@ -91,7 +91,7 @@ class BookRepository {
 
     fun saveBooksToFile(context: Context) {
         val file = File(context.filesDir, "books.json")
-        val json = Json.encodeToString(ListSerializer(Book.serializer()), booksLiveData.value ?: emptyList())
+        val json = Json.encodeToString(ListSerializer(Book.serializer()), backupBookList)
         file.writeText(json)
     }
 
