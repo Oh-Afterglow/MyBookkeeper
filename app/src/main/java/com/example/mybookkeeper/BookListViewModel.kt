@@ -1,7 +1,6 @@
 package com.example.mybookkeeper
 
 import android.content.Context
-import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -91,6 +90,8 @@ class BookRepository {
 
     fun saveBooksToFile(context: Context) {
         val file = File(context.filesDir, "books.json")
+        file.delete()
+        file.createNewFile()
         val json = Json.encodeToString(ListSerializer(Book.serializer()), backupBookList)
         file.writeText(json)
     }

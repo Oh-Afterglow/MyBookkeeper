@@ -43,6 +43,7 @@ class BookListActivity : AppCompatActivity() {
         alertDialog.setMessage("Are you sure you want to delete \'${book.title}\'?")
         alertDialog.setPositiveButton("OK") { _, _ ->
             bookListViewModel.deleteBook(book)
+            bookListViewModel.saveBooks(this.applicationContext)
         }
         alertDialog.setNegativeButton("Cancel") { _, _ ->
             // do nothing
