@@ -1,6 +1,7 @@
 package com.example.mybookkeeper
 
 import android.content.Context
+import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -37,6 +38,10 @@ class BookListViewModel(private val bookRepository: BookRepository): ViewModel()
 
     fun searchAuthor(author: String) {
         bookRepository.searchAuthor(author)
+    }
+
+    fun getNumberOfBooks(): Int {
+        return bookRepository.getNumberOfBooks()
     }
 }
 
@@ -98,7 +103,7 @@ class BookRepository {
         val currentBooks = (booksLiveData.value ?: emptyList()).toMutableList()
         if (author.isNotEmpty()) {
             val resultBooks = mutableListOf<Book>()
-            for (b in currentBooks) {
+            for (b in backupBookList) {
                 if (b.author.contains(author, true)) {
                     resultBooks.add(b)
                 }
@@ -112,6 +117,10 @@ class BookRepository {
                 booksLiveData.postValue(currentBooks)
             }
         }
+    }
+
+    fun getNumberOfBooks(): Int {
+        return booksLiveData.value?.count() ?: 0
     }
 
     companion object {

@@ -2,7 +2,9 @@ package com.example.mybookkeeper
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +24,11 @@ class BookListActivity : AppCompatActivity() {
         bookListView.layoutManager = linearLayoutManager
         bookListView.adapter = bookAdapter
         bookListViewModel.getBooks().observe(this) {
-            it?.let{ bookAdapter.submitList(it as MutableList<Book>) }
+            it?.let{
+                bookAdapter.submitList(it as MutableList<Book>)
+                val bookNumber = findViewById<TextView>(R.id.number_of_books)
+                bookNumber.text = getString(R.string.number_of_books, bookListViewModel.getNumberOfBooks())
+            }
         }
 
         val searchBox = findViewById<EditText>(R.id.author_search_box)
@@ -43,6 +49,7 @@ class BookListActivity : AppCompatActivity() {
         }
         alertDialog.show()
     }
+
 
     override fun onStop() {
         super.onStop()
